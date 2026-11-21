@@ -15,7 +15,7 @@ Scripts de Python para que Claude mantenga el vault gastando pocos tokens. Casi 
 | Revisar duplicados antes de escribir | `python .cerebro/hipocampo.py comparar --plan plan.json` |
 | Mantenimiento | `python .cerebro/hipocampo.py pendientes` |
 | Marcar una lección de Claude | `python .cerebro/lecciones.py marcar E01 +` (o `-`) · `listar --alertas` |
-| Medir el buscador | `python .cerebro/hipocampo.py evaluar --solo-medir` |
+| Medir el buscador | `python .cerebro/hipocampo.py evaluar --solo-medir` (las preguntas con `"esperadas": []` no tienen respuesta: se cuenta cuántas reciben candidatas) |
 | Cerrar una actualización | `python .cerebro/cerrar.py --corte <fecha> -m "actualizacion: …"` |
 | Hablar con tu yo del pasado | `python .cerebro/pasado.py AAAA-MM-DD` |
 

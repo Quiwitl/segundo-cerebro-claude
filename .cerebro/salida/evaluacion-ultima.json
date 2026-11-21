@@ -1,28 +1,50 @@
 {
- "fecha": "2026-11-20T23:50",
+ "fecha": "2026-11-21T02:26",
  "preguntas": 10,
  "resultados": {
   "lexico": {
    "acierto_3": 10,
    "mrr": 0.95,
-   "fallos": []
+   "fallos": [],
+   "sin_respuesta": {
+    "n": 3,
+    "con_candidata": [
+     "historia del imperio otomano → Ejemplo - historia del arte"
+    ]
+   }
   },
   "hongo": {
    "acierto_3": 9,
    "mrr": 0.758,
    "fallos": [
     "qué decidí y qué descarté"
-   ]
+   ],
+   "sin_respuesta": {
+    "n": 3,
+    "con_candidata": []
+   }
   },
   "mixto": {
    "acierto_3": 10,
    "mrr": 0.9,
-   "fallos": []
+   "fallos": [],
+   "sin_respuesta": {
+    "n": 3,
+    "con_candidata": [
+     "historia del imperio otomano → Ejemplo - historia del arte"
+    ]
+   }
   },
   "lexico+tiempo": {
    "acierto_3": 10,
    "mrr": 0.95,
-   "fallos": []
+   "fallos": [],
+   "sin_respuesta": {
+    "n": 3,
+    "con_candidata": [
+     "historia del imperio otomano → Ejemplo - historia del arte"
+    ]
+   }
   }
  },
  "ganador": "lexico"

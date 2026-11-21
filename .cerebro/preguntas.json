@@ -1,5 +1,5 @@
 {
- "nota": "Preguntas de ejemplo sobre las notas de la plantilla. Reemplázalas por preguntas TUYAS sobre tus notas, con otras palabras que las de cada description; luego corre `hipocampo.py evaluar`.",
+ "nota": "Preguntas de ejemplo sobre las notas de la plantilla. Reemplázalas por preguntas TUYAS sobre tus notas, con otras palabras que las de cada description; luego corre `hipocampo.py evaluar`. Las de `esperadas: []` no tienen respuesta en el vault: miden si `buscar` devuelve algo cuando no debería (comprueba que su tema de verdad no esté en tus notas).",
  "preguntas": [
   {
    "pregunta": "cómo riego mis plantas en macetas",
@@ -60,6 +60,18 @@
    "esperadas": [
     "Escritura en Windows"
    ]
+  },
+  {
+   "pregunta": "historia del imperio otomano",
+   "esperadas": []
+  },
+  {
+   "pregunta": "aperturas de ajedrez",
+   "esperadas": []
+  },
+  {
+   "pregunta": "receta de mole poblano",
+   "esperadas": []
   }
  ]
 }

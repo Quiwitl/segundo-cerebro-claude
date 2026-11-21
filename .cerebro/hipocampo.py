@@ -526,13 +526,17 @@ def inicio_cuerpo(rel):
     return 1
 
 
+def visibles(todas):
+    """Las candidatas que `buscar` muestra: con señal propia y cerca de la mejor (sin ruido)."""
+    tope = todas[0][4] if todas else 0.0
+    return [f for f in todas if f[4] >= max(MINIMO, 0.3 * tope)]
+
+
 def buscar(consulta, n=5, modo=None, cuerpo=True):
     d, cambios = sincronizar()
     modo = modo or modo_por_omision()
     todas = ranking(consulta, d, modo)
-    tope = todas[0][4] if todas else 0.0
-    # sin ruido: solo candidatas con señal propia y cerca de la mejor
-    filas = [f for f in todas if f[4] >= max(MINIMO, 0.3 * tope)][:n]
+    filas = visibles(todas)[:n]
     if cambios["nuevas"] or cambios["cambiadas"] or cambios["movidas"] or cambios["borradas"]:
         print("(hipocampo al día: " + ", ".join(f"{len(v)} {k}" for k, v in cambios.items() if v and k != "ids") + ")")
     if not filas:
@@ -777,6 +781,10 @@ def evaluar(ruta=PREGUNTAS, solo_medir=False):
     if isinstance(preguntas, dict):
         preguntas = preguntas.get("preguntas", [])
     d, _ = sincronizar(mapas=False)
+    # preguntas sin respuesta (`"esperadas": []`): no cuentan en aciertos ni MRR; se mide cuántas
+    # devuelven candidatas que `buscar` mostraría (idea de claude-obsidian)
+    negativas = [q for q in preguntas if not q.get("esperadas")]
+    preguntas = [q for q in preguntas if q.get("esperadas")]
     res = {}
     for modo, tiempo in (("lexico", False), ("hongo", False), ("mixto", False), ("lexico+tiempo", True)):
         a3, rr, fallos = 0, 0.0, []
@@ -793,7 +801,13 @@ def evaluar(ruta=PREGUNTAS, solo_medir=False):
             else:
                 fallos.append(q["pregunta"])
             rr += 1.0 / (pos + 1) if pos is not None else 0.0
-        res[modo] = {"acierto_3": a3, "mrr": round(rr / len(preguntas), 3), "fallos": fallos}
+        con_candidata = []
+        for q in negativas:
+            vis = visibles(ranking(q["pregunta"], d, modo.split("+")[0], tiempo))
+            if vis:
+                con_candidata.append(f"{q['pregunta']} → {vis[0][1]['titulo']}")
+        res[modo] = {"acierto_3": a3, "mrr": round(rr / len(preguntas), 3) if preguntas else 0.0, "fallos": fallos,
+                     "sin_respuesta": {"n": len(negativas), "con_candidata": con_candidata}}
     n = len(preguntas)
     base = res["lexico"]
     # regla de corte: el hongo entra solo si acierta al menos 2 preguntas más (10 % de 20) que el léxico
@@ -808,7 +822,9 @@ def evaluar(ruta=PREGUNTAS, solo_medir=False):
         json.dump(salida, f, ensure_ascii=False, indent=1)
         f.write("\n")
     for m, r in res.items():
-        print(f"{m:7s} aciertos en top 3: {r['acierto_3']}/{n} · MRR {r['mrr']:.2f}")
+        sr = r["sin_respuesta"]
+        extra = f" · sin respuesta con candidata: {len(sr['con_candidata'])}/{sr['n']}" if sr["n"] else ""
+        print(f"{m:7s} aciertos en top 3: {r['acierto_3']}/{n} · MRR {r['mrr']:.2f}{extra}")
     if solo_medir:
         print(f"Solo medición. Modo que ganaría: {ganador} · modo actual: {modo_por_omision()}")
     else:

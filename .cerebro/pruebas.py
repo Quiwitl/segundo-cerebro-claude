@@ -292,13 +292,25 @@ def t_lecciones(tmp):
     assert m.count("%%E") >= 5 and "%%E01 +1 -0%%" in m, m[:800]
 
 
+@prueba("evaluar: las preguntas sin respuesta no cuentan en el MRR y se reportan aparte")
+def t_negativas(tmp):
+    plan(tmp, [dict(NOTA, ruta="concepts/Zz ornitorrinco", meta={"description": "Ornitorrinco lunar de prueba"})])
+    ruta = os.path.join(tmp, ".cerebro", "preguntas-neg.json")
+    with open(ruta, "w", encoding="utf-8") as f:
+        json.dump({"preguntas": [{"pregunta": "ornitorrinco lunar", "esperadas": ["Zz ornitorrinco"]},
+                                 {"pregunta": "qxzvbn wqplmk", "esperadas": []},
+                                 {"pregunta": "ornitorrinco marciano", "esperadas": []}]}, f)
+    s = cli(tmp, ".cerebro/hipocampo.py", "evaluar", ruta, "--solo-medir")
+    assert "lexico  aciertos en top 3: 1/1 · MRR 1.00 · sin respuesta con candidata: 1/2" in s, s
+
+
 def main():
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")
     tmp = preparar()
     try:
         for t in (t_verificar, t_dry, t_todo_o_nada, t_nueva, t_buscar, t_renombrar, t_borrar, t_duplicado,
-                  t_viejo, t_aprende, t_comparar, t_catalogo, t_hook, t_hot, t_solo_medir, t_pendiente, t_lecciones, t_red):
+                  t_viejo, t_aprende, t_comparar, t_catalogo, t_hook, t_hot, t_solo_medir, t_pendiente, t_lecciones, t_negativas, t_red):
             t(tmp)
     finally:
         shutil.rmtree(tmp, ignore_errors=True)

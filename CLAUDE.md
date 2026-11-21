@@ -29,6 +29,7 @@ Lo que lee la actualización, además de `.raw/`:
 - Lo que dijo {{NOMBRE}} se registra como suyo; una sugerencia de Claude no es una decisión de {{NOMBRE}}.
 - **Buscar gastando poco (hipocampo → corteza)**:
   1. `python .cerebro/hipocampo.py buscar <palabras>` antes que Grep: devuelve ~1 línea por candidata (ruta | l.N | description | citas | región). `l.N` es la línea donde empieza el cuerpo.
+  Si ninguna candidata nombra el tema de la consulta, lo más probable es que **no esté en el vault**: decirlo en vez de forzar la más parecida.
   2. Abrir la candidata desde `l.N` con límite de ~5 líneas; leer el resto solo si hace falta.
   3. Contexto alrededor: `python .cerebro/ruta.py "Nota"`; para unir dos temas, `ruta.py "A" "B"`. Parar en cuanto alcance.
   4. Si una nota resolvió la búsqueda: `python .cerebro/hipocampo.py usar "Nota" --consulta "<palabras>"`. Alimenta al Physarum y enseña esas palabras al hipocampo, **sobre todo cuando `buscar` falló** y la nota salió por otro camino.
