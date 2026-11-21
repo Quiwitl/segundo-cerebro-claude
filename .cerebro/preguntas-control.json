@@ -1,0 +1,41 @@
+{
+ "nota": "Control: preguntas fáciles que cualquier cambio debe seguir acertando.",
+ "preguntas": [
+  {
+   "pregunta": "glosario",
+   "esperadas": [
+    "Glosario"
+   ]
+  },
+  {
+   "pregunta": "bienvenida al vault",
+   "esperadas": [
+    "Bienvenida"
+   ]
+  },
+  {
+   "pregunta": "hipocampo índice",
+   "esperadas": [
+    "Hipocampo como indice"
+   ]
+  },
+  {
+   "pregunta": "herramientas de .cerebro",
+   "esperadas": [
+    "Herramientas de .cerebro"
+   ]
+  },
+  {
+   "pregunta": "correcciones recurrentes",
+   "esperadas": [
+    "Correcciones recurrentes"
+   ]
+  },
+  {
+   "pregunta": "entorno de trabajo",
+   "esperadas": [
+    "Entorno de trabajo"
+   ]
+  }
+ ]
+}

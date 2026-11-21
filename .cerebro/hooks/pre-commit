@@ -1,0 +1,36 @@
+#!/bin/sh
+# Antes de cada commit (también los de Obsidian Git):
+# 1. gitleaks revisa lo que entra al commit. Es lo único que bloquea: un secreto que llega a
+#    GitHub se queda en el historial aunque luego se borre. Si gitleaks no está o falla sin
+#    reporte, no bloquea.
+# 2. Regenera el hipocampo, para que el índice y los mapas que se respaldan correspondan a las
+#    notas del mismo commit. Nunca bloquea: si algo falla, `buscar` lo repara al leer.
+cd "$(git rev-parse --show-toplevel)" 2>/dev/null || exit 0
+
+GL=$(command -v gitleaks 2>/dev/null)
+if [ -z "$GL" ] && [ -n "$LOCALAPPDATA" ]; then
+    # Obsidian abierto antes de instalar gitleaks no ve el PATH nuevo
+    for f in "$(cygpath -u "$LOCALAPPDATA" 2>/dev/null)"/Microsoft/WinGet/Packages/Gitleaks.Gitleaks_*/gitleaks.exe; do
+        [ -f "$f" ] && GL="$f"
+    done
+fi
+if [ -n "$GL" ]; then
+    REP="$(git rev-parse --git-dir)/gitleaks-staged.json"
+    rm -f "$REP"
+    "$GL" git --pre-commit --staged --redact --no-banner --report-format json --report-path "$REP" >/dev/null 2>&1
+    if [ -s "$REP" ] && grep -q '"RuleID"' "$REP"; then
+        echo "gitleaks: posible secreto en los cambios; commit detenido (valores ocultos):"
+        grep -E '"(RuleID|File|StartLine|Fingerprint)"' "$REP" | head -n 40
+        echo "Quitarlo del archivo. Si es falso positivo, copiar su Fingerprint a .gitleaksignore."
+        exit 1
+    fi
+fi
+
+for PY in python python3 py; do
+    if command -v "$PY" >/dev/null 2>&1 && "$PY" -c "import sys" >/dev/null 2>&1; then
+        "$PY" .cerebro/hipocampo.py indexar --hook >/dev/null 2>&1 || exit 0
+        git add .cerebro/hipocampo.json wiki/hipocampo >/dev/null 2>&1
+        break
+    fi
+done
+exit 0

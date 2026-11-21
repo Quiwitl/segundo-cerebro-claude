@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "deny": [
+      "Edit(/.cerebro/hipocampo.json)",
+      "Edit(/.cerebro/uso.jsonl)",
+      "Edit(/wiki/hipocampo/**)"
+    ]
+  }
+}

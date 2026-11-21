@@ -1,0 +1,578 @@
+{
+ "fecha": "2026-11-20 23:50",
+ "notas": 22,
+ "enlaces": 27,
+ "grado_medio": 2.4545454545454546,
+ "densidad": 0.11688311688311688,
+ "componentes": 2,
+ "componente_mayor": 21,
+ "hubs": [
+  "wiki/meta/claude/Claude - método",
+  "wiki/meta/Cómo funciona el cerebro del vault",
+  "wiki/concepts/Hipocampo como indice",
+  "wiki/areas/Registro de decisiones",
+  "wiki/areas/Bienvenida",
+  "wiki/concepts/Cuerpo hongo de la mosca",
+  "wiki/concepts/Zettelkasten",
+  "wiki/concepts/Repeticion espaciada",
+  "wiki/concepts/Physarum polycephalum",
+  "wiki/meta/claude/Claude - log de método"
+ ],
+ "puentes": [
+  "wiki/meta/Cómo funciona el cerebro del vault",
+  "wiki/meta/claude/Claude - método",
+  "wiki/concepts/Hipocampo como indice",
+  "wiki/areas/Bienvenida",
+  "wiki/concepts/Zettelkasten",
+  "wiki/concepts/Repeticion espaciada",
+  "wiki/areas/Proyecto de ejemplo - huerto urbano",
+  "wiki/areas/Registro de decisiones",
+  "wiki/concepts/Cuerpo hongo de la mosca",
+  "wiki/concepts/Physarum polycephalum"
+ ],
+ "regiones": [
+  {
+   "tamano": 7,
+   "nucleo": [
+    "wiki/meta/claude/Claude - método",
+    "wiki/areas/Registro de decisiones",
+    "wiki/meta/claude/lecciones/Cómo medir un cambio",
+    "wiki/meta/claude/Claude - quién sabe qué",
+    "wiki/meta/claude/lecciones/Correcciones recurrentes"
+   ],
+   "miembros": [
+    "wiki/areas/Registro de decisiones",
+    "wiki/meta/claude/Claude - log de método",
+    "wiki/meta/claude/Claude - método",
+    "wiki/meta/claude/Claude - quién sabe qué",
+    "wiki/meta/claude/lecciones/Correcciones recurrentes",
+    "wiki/meta/claude/lecciones/Cómo medir un cambio",
+    "wiki/meta/claude/lecciones/Escritura en Windows"
+   ],
+   "carpetas": [
+    [
+     "meta/claude/lecciones",
+     3
+    ],
+    [
+     "meta/claude",
+     3
+    ],
+    [
+     "areas",
+     1
+    ]
+   ]
+  },
+  {
+   "tamano": 5,
+   "nucleo": [
+    "wiki/meta/Cómo funciona el cerebro del vault",
+    "wiki/concepts/Cuerpo hongo de la mosca",
+    "wiki/concepts/Physarum polycephalum",
+    "wiki/meta/claude/lecciones/Herramientas de .cerebro",
+    "wiki/meta/Glosario"
+   ],
+   "miembros": [
+    "wiki/concepts/Cuerpo hongo de la mosca",
+    "wiki/concepts/Physarum polycephalum",
+    "wiki/meta/Cómo funciona el cerebro del vault",
+    "wiki/meta/Glosario",
+    "wiki/meta/claude/lecciones/Herramientas de .cerebro"
+   ],
+   "carpetas": [
+    [
+     "concepts",
+     2
+    ],
+    [
+     "meta",
+     2
+    ],
+    [
+     "meta/claude/lecciones",
+     1
+    ]
+   ]
+  },
+  {
+   "tamano": 5,
+   "nucleo": [
+    "wiki/areas/Bienvenida",
+    "wiki/concepts/Repeticion espaciada",
+    "wiki/areas/Proyecto de ejemplo - huerto urbano",
+    "wiki/learning/Ejemplo - calculo diferencial",
+    "wiki/meta/Entorno de trabajo"
+   ],
+   "miembros": [
+    "wiki/areas/Bienvenida",
+    "wiki/areas/Proyecto de ejemplo - huerto urbano",
+    "wiki/concepts/Repeticion espaciada",
+    "wiki/learning/Ejemplo - calculo diferencial",
+    "wiki/meta/Entorno de trabajo"
+   ],
+   "carpetas": [
+    [
+     "areas",
+     2
+    ],
+    [
+     "learning",
+     1
+    ],
+    [
+     "meta",
+     1
+    ]
+   ]
+  },
+  {
+   "tamano": 4,
+   "nucleo": [
+    "wiki/concepts/Hipocampo como indice",
+    "wiki/concepts/Zettelkasten",
+    "wiki/learning/Ejemplo - historia del arte",
+    "wiki/sources/Ejemplo de fuente - articulo"
+   ],
+   "miembros": [
+    "wiki/concepts/Hipocampo como indice",
+    "wiki/concepts/Zettelkasten",
+    "wiki/learning/Ejemplo - historia del arte",
+    "wiki/sources/Ejemplo de fuente - articulo"
+   ],
+   "carpetas": [
+    [
+     "concepts",
+     2
+    ],
+    [
+     "learning",
+     1
+    ],
+    [
+     "sources",
+     1
+    ]
+   ]
+  }
+ ],
+ "modularidad": 0.47050754458161864,
+ "aisladas": [
+  "wiki/areas/Diario privado (ejemplo)"
+ ],
+ "rotos": [],
+ "mundo_pequeno": {
+  "n": 21,
+  "C": 0.25793650793650796,
+  "L": 2.8190476190476192,
+  "C_rand": 0.08348872180451128,
+  "L_rand": 3.022088554720134,
+  "sigma": 3.3119958034403285
+ },
+ "catalogos": [],
+ "sugeridos": [
+  {
+   "a": "wiki/areas/Bienvenida",
+   "b": "wiki/concepts/Repeticion espaciada",
+   "puntaje": 0.5,
+   "via": [
+    "wiki/areas/Proyecto de ejemplo - huerto urbano"
+   ]
+  },
+  {
+   "a": "wiki/concepts/Hipocampo como indice",
+   "b": "wiki/concepts/Physarum polycephalum",
+   "puntaje": 0.476,
+   "via": [
+    "wiki/concepts/Cuerpo hongo de la mosca",
+    "wiki/meta/Cómo funciona el cerebro del vault"
+   ]
+  },
+  {
+   "a": "wiki/areas/Bienvenida",
+   "b": "wiki/meta/claude/Claude - método",
+   "puntaje": 0.393,
+   "via": [
+    "wiki/areas/Registro de decisiones",
+    "wiki/meta/Cómo funciona el cerebro del vault"
+   ]
+  },
+  {
+   "a": "wiki/meta/claude/Claude - quién sabe qué",
+   "b": "wiki/meta/claude/lecciones/Cómo medir un cambio",
+   "puntaje": 0.375,
+   "via": [
+    "wiki/areas/Registro de decisiones",
+    "wiki/meta/claude/Claude - método"
+   ]
+  },
+  {
+   "a": "wiki/areas/Registro de decisiones",
+   "b": "wiki/meta/Cómo funciona el cerebro del vault",
+   "puntaje": 0.375,
+   "via": [
+    "wiki/areas/Bienvenida",
+    "wiki/meta/claude/Claude - método"
+   ]
+  },
+  {
+   "a": "wiki/concepts/Zettelkasten",
+   "b": "wiki/meta/Cómo funciona el cerebro del vault",
+   "puntaje": 0.333,
+   "via": [
+    "wiki/concepts/Hipocampo como indice"
+   ]
+  },
+  {
+   "a": "wiki/concepts/Zettelkasten",
+   "b": "wiki/learning/Ejemplo - calculo diferencial",
+   "puntaje": 0.333,
+   "via": [
+    "wiki/concepts/Repeticion espaciada"
+   ]
+  },
+  {
+   "a": "wiki/concepts/Repeticion espaciada",
+   "b": "wiki/learning/Ejemplo - historia del arte",
+   "puntaje": 0.333,
+   "via": [
+    "wiki/concepts/Zettelkasten"
+   ]
+  },
+  {
+   "a": "wiki/concepts/Hipocampo como indice",
+   "b": "wiki/learning/Ejemplo - historia del arte",
+   "puntaje": 0.333,
+   "via": [
+    "wiki/concepts/Zettelkasten"
+   ]
+  },
+  {
+   "a": "wiki/concepts/Hipocampo como indice",
+   "b": "wiki/concepts/Repeticion espaciada",
+   "puntaje": 0.333,
+   "via": [
+    "wiki/concepts/Zettelkasten"
+   ]
+  }
+ ],
+ "nodos": {
+  "wiki/concepts/Cuerpo hongo de la mosca": {
+   "grado": 3,
+   "entrada": 3,
+   "betweenness": 0.01404
+  },
+  "wiki/concepts/Zettelkasten": {
+   "grado": 3,
+   "entrada": 3,
+   "betweenness": 0.17368
+  },
+  "wiki/concepts/Hipocampo como indice": {
+   "grado": 4,
+   "entrada": 4,
+   "betweenness": 0.2807
+  },
+  "wiki/concepts/Repeticion espaciada": {
+   "grado": 3,
+   "entrada": 3,
+   "betweenness": 0.12982
+  },
+  "wiki/concepts/Physarum polycephalum": {
+   "grado": 2,
+   "entrada": 2,
+   "betweenness": 0.0
+  },
+  "wiki/meta/Glosario": {
+   "grado": 1,
+   "entrada": 0,
+   "betweenness": 0.0
+  },
+  "wiki/meta/Cómo funciona el cerebro del vault": {
+   "grado": 7,
+   "entrada": 5,
+   "betweenness": 0.52105
+  },
+  "wiki/meta/Entorno de trabajo": {
+   "grado": 1,
+   "entrada": 0,
+   "betweenness": 0.0
+  },
+  "wiki/meta/claude/Claude - método": {
+   "grado": 8,
+   "entrada": 6,
+   "betweenness": 0.40614
+  },
+  "wiki/meta/claude/Claude - log de método": {
+   "grado": 1,
+   "entrada": 1,
+   "betweenness": 0.0
+  },
+  "wiki/meta/claude/Claude - quién sabe qué": {
+   "grado": 2,
+   "entrada": 1,
+   "betweenness": 0.0
+  },
+  "wiki/meta/claude/lecciones/Correcciones recurrentes": {
+   "grado": 1,
+   "entrada": 1,
+   "betweenness": 0.0
+  },
+  "wiki/meta/claude/lecciones/Escritura en Windows": {
+   "grado": 1,
+   "entrada": 1,
+   "betweenness": 0.0
+  },
+  "wiki/meta/claude/lecciones/Herramientas de .cerebro": {
+   "grado": 2,
+   "entrada": 1,
+   "betweenness": 0.0
+  },
+  "wiki/meta/claude/lecciones/Cómo medir un cambio": {
+   "grado": 2,
+   "entrada": 1,
+   "betweenness": 0.0
+  },
+  "wiki/sources/Ejemplo de fuente - articulo": {
+   "grado": 1,
+   "entrada": 0,
+   "betweenness": 0.0
+  },
+  "wiki/areas/Registro de decisiones": {
+   "grado": 4,
+   "entrada": 4,
+   "betweenness": 0.10088
+  },
+  "wiki/areas/Diario privado (ejemplo)": {
+   "grado": 0,
+   "entrada": 0,
+   "betweenness": 0
+  },
+  "wiki/areas/Bienvenida": {
+   "grado": 4,
+   "entrada": 4,
+   "betweenness": 0.27018
+  },
+  "wiki/areas/Proyecto de ejemplo - huerto urbano": {
+   "grado": 2,
+   "entrada": 1,
+   "betweenness": 0.11404
+  },
+  "wiki/learning/Ejemplo - calculo diferencial": {
+   "grado": 1,
+   "entrada": 0,
+   "betweenness": 0.0
+  },
+  "wiki/learning/Ejemplo - historia del arte": {
+   "grado": 1,
+   "entrada": 0,
+   "betweenness": 0.0
+  }
+ },
+ "aristas": [
+  [
+   "wiki/concepts/Cuerpo hongo de la mosca",
+   "wiki/concepts/Hipocampo como indice",
+   1
+  ],
+  [
+   "wiki/concepts/Cuerpo hongo de la mosca",
+   "wiki/concepts/Physarum polycephalum",
+   1
+  ],
+  [
+   "wiki/concepts/Zettelkasten",
+   "wiki/concepts/Hipocampo como indice",
+   2
+  ],
+  [
+   "wiki/concepts/Zettelkasten",
+   "wiki/concepts/Repeticion espaciada",
+   1
+  ],
+  [
+   "wiki/concepts/Hipocampo como indice",
+   "wiki/concepts/Zettelkasten",
+   1
+  ],
+  [
+   "wiki/concepts/Hipocampo como indice",
+   "wiki/concepts/Cuerpo hongo de la mosca",
+   1
+  ],
+  [
+   "wiki/concepts/Hipocampo como indice",
+   "wiki/meta/Cómo funciona el cerebro del vault",
+   1
+  ],
+  [
+   "wiki/concepts/Repeticion espaciada",
+   "wiki/concepts/Zettelkasten",
+   1
+  ],
+  [
+   "wiki/concepts/Physarum polycephalum",
+   "wiki/concepts/Cuerpo hongo de la mosca",
+   1
+  ],
+  [
+   "wiki/meta/Glosario",
+   "wiki/meta/Cómo funciona el cerebro del vault",
+   1
+  ],
+  [
+   "wiki/meta/Cómo funciona el cerebro del vault",
+   "wiki/concepts/Hipocampo como indice",
+   2
+  ],
+  [
+   "wiki/meta/Cómo funciona el cerebro del vault",
+   "wiki/concepts/Physarum polycephalum",
+   2
+  ],
+  [
+   "wiki/meta/Cómo funciona el cerebro del vault",
+   "wiki/areas/Bienvenida",
+   1
+  ],
+  [
+   "wiki/meta/Cómo funciona el cerebro del vault",
+   "wiki/concepts/Cuerpo hongo de la mosca",
+   1
+  ],
+  [
+   "wiki/meta/Entorno de trabajo",
+   "wiki/areas/Bienvenida",
+   1
+  ],
+  [
+   "wiki/meta/claude/Claude - método",
+   "wiki/meta/Cómo funciona el cerebro del vault",
+   1
+  ],
+  [
+   "wiki/meta/claude/Claude - método",
+   "wiki/meta/claude/Claude - log de método",
+   2
+  ],
+  [
+   "wiki/meta/claude/Claude - método",
+   "wiki/meta/claude/lecciones/Correcciones recurrentes",
+   3
+  ],
+  [
+   "wiki/meta/claude/Claude - método",
+   "wiki/meta/claude/Claude - quién sabe qué",
+   1
+  ],
+  [
+   "wiki/meta/claude/Claude - método",
+   "wiki/meta/claude/lecciones/Escritura en Windows",
+   2
+  ],
+  [
+   "wiki/meta/claude/Claude - método",
+   "wiki/meta/claude/lecciones/Herramientas de .cerebro",
+   2
+  ],
+  [
+   "wiki/meta/claude/Claude - método",
+   "wiki/meta/claude/lecciones/Cómo medir un cambio",
+   2
+  ],
+  [
+   "wiki/meta/claude/Claude - método",
+   "wiki/areas/Registro de decisiones",
+   1
+  ],
+  [
+   "wiki/meta/claude/Claude - log de método",
+   "wiki/meta/claude/Claude - método",
+   2
+  ],
+  [
+   "wiki/meta/claude/Claude - quién sabe qué",
+   "wiki/meta/claude/Claude - método",
+   1
+  ],
+  [
+   "wiki/meta/claude/Claude - quién sabe qué",
+   "wiki/areas/Registro de decisiones",
+   2
+  ],
+  [
+   "wiki/meta/claude/lecciones/Correcciones recurrentes",
+   "wiki/meta/claude/Claude - método",
+   1
+  ],
+  [
+   "wiki/meta/claude/lecciones/Escritura en Windows",
+   "wiki/meta/claude/Claude - método",
+   1
+  ],
+  [
+   "wiki/meta/claude/lecciones/Herramientas de .cerebro",
+   "wiki/meta/claude/Claude - método",
+   1
+  ],
+  [
+   "wiki/meta/claude/lecciones/Herramientas de .cerebro",
+   "wiki/meta/Cómo funciona el cerebro del vault",
+   1
+  ],
+  [
+   "wiki/meta/claude/lecciones/Cómo medir un cambio",
+   "wiki/meta/claude/Claude - método",
+   1
+  ],
+  [
+   "wiki/meta/claude/lecciones/Cómo medir un cambio",
+   "wiki/areas/Registro de decisiones",
+   1
+  ],
+  [
+   "wiki/sources/Ejemplo de fuente - articulo",
+   "wiki/concepts/Hipocampo como indice",
+   2
+  ],
+  [
+   "wiki/areas/Registro de decisiones",
+   "wiki/areas/Bienvenida",
+   1
+  ],
+  [
+   "wiki/areas/Bienvenida",
+   "wiki/meta/Cómo funciona el cerebro del vault",
+   2
+  ],
+  [
+   "wiki/areas/Bienvenida",
+   "wiki/areas/Registro de decisiones",
+   2
+  ],
+  [
+   "wiki/areas/Bienvenida",
+   "wiki/areas/Proyecto de ejemplo - huerto urbano",
+   1
+  ],
+  [
+   "wiki/areas/Proyecto de ejemplo - huerto urbano",
+   "wiki/areas/Bienvenida",
+   1
+  ],
+  [
+   "wiki/areas/Proyecto de ejemplo - huerto urbano",
+   "wiki/concepts/Repeticion espaciada",
+   1
+  ],
+  [
+   "wiki/learning/Ejemplo - calculo diferencial",
+   "wiki/concepts/Repeticion espaciada",
+   1
+  ],
+  [
+   "wiki/learning/Ejemplo - historia del arte",
+   "wiki/concepts/Zettelkasten",
+   1
+  ]
+ ]
+}

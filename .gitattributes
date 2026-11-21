@@ -1,0 +1,18 @@
+# Mismos saltos de línea (LF) en el repo y en el disco, aunque Git en Windows tenga core.autocrlf=true.
+# Sin esto, cada herramienta (Python, PowerShell, Obsidian) escribía uno distinto y los diffs salían enteros.
+* text=auto eol=lf
+# PowerShell en Windows: CRLF
+*.ps1 text eol=crlf
+*.bat text eol=crlf
+# los hooks los ejecuta el sh de Git: con CRLF fallan
+.cerebro/hooks/* text eol=lf
+# binarios
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.pdf binary
+*.zip binary
+*.webp binary
+*.mp4 binary
+*.mp3 binary

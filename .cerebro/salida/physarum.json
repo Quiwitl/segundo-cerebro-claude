@@ -1,0 +1,191 @@
+[
+{
+"u": "wiki/concepts/Cuerpo hongo de la mosca",
+"v": "wiki/concepts/Hipocampo como indice",
+"D": 0.08913431773572733,
+"u_id": "n5477fc57",
+"v_id": "n11a7c3b5"
+},
+{
+"u": "wiki/concepts/Cuerpo hongo de la mosca",
+"v": "wiki/concepts/Physarum polycephalum",
+"D": 0.031195924429614413,
+"u_id": "n5477fc57",
+"v_id": "n29f12d9d"
+},
+{
+"u": "wiki/concepts/Cuerpo hongo de la mosca",
+"v": "wiki/meta/Cómo funciona el cerebro del vault",
+"D": 1.0000000000000245e-06,
+"u_id": "n5477fc57",
+"v_id": "n6a872188"
+},
+{
+"u": "wiki/concepts/Hipocampo como indice",
+"v": "wiki/concepts/Zettelkasten",
+"D": 0.329961289478434,
+"u_id": "n11a7c3b5",
+"v_id": "n124856b5"
+},
+{
+"u": "wiki/concepts/Hipocampo como indice",
+"v": "wiki/meta/Cómo funciona el cerebro del vault",
+"D": 0.446984412838769,
+"u_id": "n11a7c3b5",
+"v_id": "n6a872188"
+},
+{
+"u": "wiki/concepts/Hipocampo como indice",
+"v": "wiki/sources/Ejemplo de fuente - articulo",
+"D": 0.10406976185333053,
+"u_id": "n11a7c3b5",
+"v_id": "n26c66bb3"
+},
+{
+"u": "wiki/concepts/Physarum polycephalum",
+"v": "wiki/meta/Cómo funciona el cerebro del vault",
+"D": 0.08360823885995033,
+"u_id": "n29f12d9d",
+"v_id": "n6a872188"
+},
+{
+"u": "wiki/concepts/Zettelkasten",
+"v": "wiki/concepts/Repeticion espaciada",
+"D": 0.178326621718121,
+"u_id": "n124856b5",
+"v_id": "n161199ae"
+},
+{
+"u": "wiki/concepts/Zettelkasten",
+"v": "wiki/learning/Ejemplo - historia del arte",
+"D": 0.10100589662299105,
+"u_id": "n124856b5",
+"v_id": "n1380e01c"
+},
+{
+"u": "wiki/concepts/Repeticion espaciada",
+"v": "wiki/areas/Proyecto de ejemplo - huerto urbano",
+"D": 1.0000000000000245e-06,
+"u_id": "n161199ae",
+"v_id": "n13cc3446"
+},
+{
+"u": "wiki/concepts/Repeticion espaciada",
+"v": "wiki/learning/Ejemplo - calculo diferencial",
+"D": 0.09311154406437115,
+"u_id": "n161199ae",
+"v_id": "n16aae796"
+},
+{
+"u": "wiki/meta/Cómo funciona el cerebro del vault",
+"v": "wiki/meta/Glosario",
+"D": 0.09120971391999826,
+"u_id": "n6a872188",
+"v_id": "n11117ac8"
+},
+{
+"u": "wiki/meta/Cómo funciona el cerebro del vault",
+"v": "wiki/areas/Bienvenida",
+"D": 0.2994578139222021,
+"u_id": "n6a872188",
+"v_id": "nabd8571b"
+},
+{
+"u": "wiki/meta/Cómo funciona el cerebro del vault",
+"v": "wiki/meta/claude/Claude - método",
+"D": 0.3333730449785533,
+"u_id": "n6a872188",
+"v_id": "n1dca40bb"
+},
+{
+"u": "wiki/meta/Cómo funciona el cerebro del vault",
+"v": "wiki/meta/claude/lecciones/Herramientas de .cerebro",
+"D": 1.0000000000000245e-06,
+"u_id": "n6a872188",
+"v_id": "nab047c26"
+},
+{
+"u": "wiki/areas/Bienvenida",
+"v": "wiki/meta/Entorno de trabajo",
+"D": 0.09404552961459384,
+"u_id": "nabd8571b",
+"v_id": "n92450cc3"
+},
+{
+"u": "wiki/areas/Bienvenida",
+"v": "wiki/areas/Registro de decisiones",
+"D": 0.13836647806419067,
+"u_id": "nabd8571b",
+"v_id": "n783c9027"
+},
+{
+"u": "wiki/areas/Bienvenida",
+"v": "wiki/areas/Proyecto de ejemplo - huerto urbano",
+"D": 0.10349412665276825,
+"u_id": "nabd8571b",
+"v_id": "n13cc3446"
+},
+{
+"u": "wiki/meta/claude/Claude - método",
+"v": "wiki/meta/claude/Claude - log de método",
+"D": 0.09353811396335901,
+"u_id": "n1dca40bb",
+"v_id": "n17a82c0d"
+},
+{
+"u": "wiki/meta/claude/Claude - método",
+"v": "wiki/meta/claude/lecciones/Correcciones recurrentes",
+"D": 0.09435620906231777,
+"u_id": "n1dca40bb",
+"v_id": "nf899537c"
+},
+{
+"u": "wiki/meta/claude/Claude - método",
+"v": "wiki/meta/claude/Claude - quién sabe qué",
+"D": 0.11194083815691365,
+"u_id": "n1dca40bb",
+"v_id": "nb70fb874"
+},
+{
+"u": "wiki/meta/claude/Claude - método",
+"v": "wiki/meta/claude/lecciones/Escritura en Windows",
+"D": 0.10246642774876591,
+"u_id": "n1dca40bb",
+"v_id": "n54f65c3d"
+},
+{
+"u": "wiki/meta/claude/Claude - método",
+"v": "wiki/meta/claude/lecciones/Herramientas de .cerebro",
+"D": 0.1005229696492556,
+"u_id": "n1dca40bb",
+"v_id": "nab047c26"
+},
+{
+"u": "wiki/meta/claude/Claude - método",
+"v": "wiki/meta/claude/lecciones/Cómo medir un cambio",
+"D": 0.08916417577279388,
+"u_id": "n1dca40bb",
+"v_id": "n5bbf3b13"
+},
+{
+"u": "wiki/meta/claude/Claude - método",
+"v": "wiki/areas/Registro de decisiones",
+"D": 1.0000000000000245e-06,
+"u_id": "n1dca40bb",
+"v_id": "n783c9027"
+},
+{
+"u": "wiki/meta/claude/Claude - quién sabe qué",
+"v": "wiki/areas/Registro de decisiones",
+"D": 0.10045873136748658,
+"u_id": "nb70fb874",
+"v_id": "n783c9027"
+},
+{
+"u": "wiki/meta/claude/lecciones/Cómo medir un cambio",
+"v": "wiki/areas/Registro de decisiones",
+"D": 1.0000000000000245e-06,
+"u_id": "n5bbf3b13",
+"v_id": "n783c9027"
+}
+]

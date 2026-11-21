@@ -1,0 +1,65 @@
+{
+ "nota": "Preguntas de ejemplo sobre las notas de la plantilla. Reemplázalas por preguntas TUYAS sobre tus notas, con otras palabras que las de cada description; luego corre `hipocampo.py evaluar`.",
+ "preguntas": [
+  {
+   "pregunta": "cómo riego mis plantas en macetas",
+   "esperadas": [
+    "Proyecto de ejemplo - huerto urbano"
+   ]
+  },
+  {
+   "pregunta": "el método de fichas de Luhmann",
+   "esperadas": [
+    "Zettelkasten"
+   ]
+  },
+  {
+   "pregunta": "repasar justo antes de olvidar",
+   "esperadas": [
+    "Repeticion espaciada"
+   ]
+  },
+  {
+   "pregunta": "el moho que copió la red de trenes de Tokio",
+   "esperadas": [
+    "Physarum polycephalum"
+   ]
+  },
+  {
+   "pregunta": "células de Kenyon y código disperso",
+   "esperadas": [
+    "Cuerpo hongo de la mosca"
+   ]
+  },
+  {
+   "pregunta": "qué decidí y qué descarté",
+   "esperadas": [
+    "Registro de decisiones"
+   ]
+  },
+  {
+   "pregunta": "regla de la cadena y máximos",
+   "esperadas": [
+    "Ejemplo - calculo diferencial"
+   ]
+  },
+  {
+   "pregunta": "perspectiva en el Renacimiento",
+   "esperadas": [
+    "Ejemplo - historia del arte"
+   ]
+  },
+  {
+   "pregunta": "cómo saber si una mejora sirve",
+   "esperadas": [
+    "Cómo medir un cambio"
+   ]
+  },
+  {
+   "pregunta": "acentos rotos en PowerShell",
+   "esperadas": [
+    "Escritura en Windows"
+   ]
+  }
+ ]
+}

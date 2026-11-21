@@ -1,0 +1,17 @@
+# Obsidian: lo que cambia en cada sesión
+.obsidian/workspace*.json
+.obsidian/cache
+.trash/
+.DS_Store
+Thumbs.db
+__pycache__/
+
+# generados localmente
+.cerebro/.cache-hipocampo.json
+
+# borradores de los agentes de la actualización
+.raw/plan.json
+.raw/novedades.md
+
+# exports completos de chats: se quedan en tu disco, no van a GitHub
+.raw/export-*/
