@@ -26,6 +26,13 @@ def preparar():
     shutil.copytree(os.path.join(RAIZ, "wiki"), os.path.join(tmp, "wiki"))
     shutil.copytree(AQUI, os.path.join(tmp, ".cerebro"),
                     ignore=shutil.ignore_patterns("__pycache__", ".cache-hipocampo.json", "uso.jsonl"))
+    # los .md de proyectos/ (LEEME, PLAN, MAPA...) también se enlazan desde las notas
+    if os.path.isdir(os.path.join(RAIZ, "proyectos")):
+        pesadas = {"datos", "resultados", ".venv", "node_modules", ".git", "__pycache__"}
+        def solo_md(d, nombres):
+            return [n for n in nombres if n in pesadas
+                    or (os.path.isfile(os.path.join(d, n)) and not n.lower().endswith(".md"))]
+        shutil.copytree(os.path.join(RAIZ, "proyectos"), os.path.join(tmp, "proyectos"), ignore=solo_md)
     return tmp
 
 
@@ -75,6 +82,29 @@ NOTA = {"op": "nueva", "ruta": "concepts/Zz prueba quimera", "meta": {"descripti
 def t_verificar(tmp):
     out = cli(tmp, ".cerebro/vault.py", "verificar", ok=False)
     assert " 0 errores" in out, out[-400:]
+
+
+@prueba("verificar: privada en hot.md y pendiente sin señal son errores; status raro es aviso")
+def t_verificar_reglas(tmp):
+    hot = os.path.join(tmp, "wiki", "hot.md")
+    original = leer(hot)
+    privada = None
+    for d, _, fs in os.walk(os.path.join(tmp, "wiki")):
+        for f in fs:
+            if f.endswith(".md") and "\nprivado: true" in leer(os.path.join(d, f)):
+                privada = f[:-3]
+    assert privada, "no hay notas privadas en la copia para comprobar"
+    escribir(hot, original + f"\n- prueba: [[{privada}]]\n")
+    out = cli(tmp, ".cerebro/vault.py", "verificar", ok=False)
+    assert "privada en hot.md" in out and " 0 errores" not in out, out[-500:]
+    escribir(hot, original)
+    plan(tmp, [dict(NOTA, ruta="concepts/Zz sin senal", meta={"description": "Prueba de pendiente sin cuando",
+                                                              "pendiente": "algo", "status": "activo"})])
+    out = cli(tmp, ".cerebro/vault.py", "verificar", ok=False)
+    assert "pendiente sin señal: concepts/Zz sin senal" in out and "falta `cuando`" in out, out[-500:]
+    assert "aviso status activo: concepts/Zz sin senal" in out, out[-500:]
+    os.remove(os.path.join(tmp, "wiki", "concepts", "Zz sin senal.md"))
+    assert " 0 errores" in cli(tmp, ".cerebro/vault.py", "verificar", ok=False)
 
 
 @prueba("aplicar --dry no escribe nada")
@@ -304,13 +334,33 @@ def t_negativas(tmp):
     assert "lexico  aciertos en top 3: 1/1 · MRR 1.00 · sin respuesta con candidata: 1/2" in s, s
 
 
+@prueba("publicar: comparar, aplicar, índice y verificar en un comando; se detiene ante un duplicado")
+def t_publicar(tmp):
+    p = os.path.join(tmp, "plan-publicar.json")
+    nota = dict(NOTA, ruta="concepts/Zz publicada", meta={"description": "Nota de prueba sobre gárgolas cristalinas de publicar"})
+    escribir(p, json.dumps([nota], ensure_ascii=False))
+    out = cli(tmp, ".cerebro/vault.py", "publicar", p, "--dry", "--sin-git")
+    assert not os.path.exists(os.path.join(tmp, "wiki", "concepts", "Zz publicada.md")), "--dry escribió"
+    out = cli(tmp, ".cerebro/vault.py", "publicar", p, "--sin-git")
+    assert os.path.exists(os.path.join(tmp, "wiki", "concepts", "Zz publicada.md")), out
+    assert "Zz publicada" in leer(os.path.join(tmp, "wiki", "index.md")), "no regeneró el índice"
+    assert "git: omitido" in out and "0 errores" in out, out
+    cli(tmp, ".cerebro/hipocampo.py", "indexar")
+    copia = dict(nota, ruta="concepts/Zz publicada copia")
+    escribir(p, json.dumps([copia], ensure_ascii=False))
+    r = subprocess.run([sys.executable, ".cerebro/vault.py", "publicar", p, "--sin-git"], cwd=tmp, capture_output=True,
+                       text=True, encoding="utf-8", errors="replace", env={**os.environ, "PYTHONIOENCODING": "utf-8"})
+    assert r.returncode == 1 and "DETENIDO" in r.stdout, r.stdout + r.stderr
+    assert not os.path.exists(os.path.join(tmp, "wiki", "concepts", "Zz publicada copia.md")), "escribió el duplicado"
+
+
 def main():
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")
     tmp = preparar()
     try:
-        for t in (t_verificar, t_dry, t_todo_o_nada, t_nueva, t_buscar, t_renombrar, t_borrar, t_duplicado,
-                  t_viejo, t_aprende, t_comparar, t_catalogo, t_hook, t_hot, t_solo_medir, t_pendiente, t_lecciones, t_negativas, t_red):
+        for t in (t_verificar, t_verificar_reglas, t_dry, t_todo_o_nada, t_nueva, t_buscar, t_renombrar, t_borrar, t_duplicado,
+                  t_viejo, t_aprende, t_comparar, t_catalogo, t_hook, t_hot, t_solo_medir, t_pendiente, t_lecciones, t_publicar, t_negativas, t_red):
             t(tmp)
     finally:
         shutil.rmtree(tmp, ignore_errors=True)

@@ -5,8 +5,12 @@ Solo usa la biblioteca estándar. Escribe siempre UTF-8 con saltos LF.
 
 Uso (desde la raíz del vault):
     python .cerebro/vault.py aplicar plan.json [--dry]   cambios en lote, todo o nada
+    python .cerebro/vault.py publicar plan.json -m "..." [--trailer "..."] [--dry] [--sin-git] [--forzar]
+                                                         una escritura completa en un solo comando: comparar,
+                                                         aplicar, indice, verificar, git add/commit/push
     python .cerebro/vault.py indice                      regenera index.md y los _index.md
-    python .cerebro/vault.py verificar                   acentos, enlaces, frontmatter, regla dispersa
+    python .cerebro/vault.py verificar                   acentos, enlaces, frontmatter, privadas en hot.md,
+                                                         pendientes sin señal, status y type, regla dispersa
     python .cerebro/vault.py descripciones [carpeta]     lectura nivel 1: ruta | descripción
     python .cerebro/vault.py estado                      muestra el registro de actualizaciones
     python .cerebro/vault.py estado --corte 2026-10-17T20:10 --chats id1,id2 [--nota "Nombre"]
@@ -23,6 +27,8 @@ Las rutas son relativas a wiki/. Cada operación toca `updated:`.
 """
 import argparse
 import datetime as dt
+import subprocess
+import tempfile
 import json
 import os
 import re
@@ -299,7 +305,19 @@ def indice():
 
 
 # ------------------------------------------------------------------ verificar
+STATUS = ("seed", "developing", "evergreen", "complete", "archived")
+TIPOS = ("area", "learning", "concept", "resource", "question", "source", "session", "meta")
+
+
 def verificar():
+    """Revisa el vault. Cada error y cada aviso dice cómo arreglarlo (→ …).
+
+    Errores (cerrar.py no sube nada si hay alguno):
+      acentos rotos, enlaces rotos, notas sin frontmatter, una nota privada enlazada desde
+      hot.md (hot.md sale del vault como contexto) y un pendiente sin su señal o al revés.
+    Avisos: sin description o sin id, status o type fuera de la lista, regla dispersa y
+      notas archivadas que hot.md trata como hilo activo.
+    """
     rels = notas()
     rels_min = {x.lower() for x in rels}
     por_nombre = {}
@@ -307,11 +325,12 @@ def verificar():
         por_nombre.setdefault(r.rsplit("/", 1)[-1].lower(), r)
     errores, avisos = [], []
     hace7 = (dt.date.today() - dt.timedelta(days=7)).isoformat()
+    meta = {}
     for r in rels:
         s = leer(abs_(r))
         sin_codigo = re.sub(CODIGO, "", s)
         if MOJIBAKE.search(sin_codigo):
-            errores.append(f"acentos rotos: {r}")
+            errores.append(f"acentos rotos: {r} → reescribir el archivo con Python (encoding='utf-8'); PowerShell en línea los rompe")
         for m in WIKILINK.finditer(sin_codigo):
             t = m.group(1).strip()
             if re.search(r"\.(png|jpe?g|gif|svg|pdf|webp|mp4|mp3|canvas|base)$", t, re.I):
@@ -319,21 +338,48 @@ def verificar():
             base = t.rsplit("/", 1)[-1].lower().removesuffix(".md")
             completo = t.lower().removesuffix(".md").removeprefix("wiki/")
             if base not in por_nombre and completo not in rels_min:
-                errores.append(f"enlace roto: {r} → [[{t}]]")
+                # documentos de código fuera de wiki/ (p. ej. proyectos/x/LEEME): válidos si el archivo existe
+                if "/" in t and os.path.isfile(os.path.join(RAIZ, t if t.lower().endswith(".md") else t + ".md")):
+                    continue
+                errores.append(f"enlace roto: {r} → [[{t}]] → si la nota se renombró, `hipocampo.py resolver \"{t}\"` dice cómo se llama hoy")
         if not de_contenido(r):
             continue
         c = campos(s)
+        meta[r] = c
         if not c:
-            errores.append(f"sin frontmatter: {r}")
+            errores.append(f"sin frontmatter: {r} → copiar el de _templates/Nota.md o crearla con `vault.py aplicar` (op nueva)")
             continue
         if not c.get("description"):
-            avisos.append(f"sin description: {r}")
+            avisos.append(f"sin description: {r} → una línea con los temas y las palabras con que se buscaría")
         if not c.get("id"):
-            avisos.append(f"sin id: {r} (python .cerebro/hipocampo.py indexar)")
+            avisos.append(f"sin id: {r} → python .cerebro/hipocampo.py indexar")
+        if not c.get("generado_por"):
+            if c.get("status") not in STATUS:
+                avisos.append(f"status {c.get('status') or 'vacío'}: {r} → usar uno de {', '.join(STATUS)}")
+            if c.get("type") and c.get("type") not in TIPOS:
+                avisos.append(f"type {c.get('type')}: {r} → usar uno de {', '.join(TIPOS)}")
+        if bool(c.get("pendiente", "").strip("\"' ")) != bool(c.get("cuando", "").strip("[]\"' ")):
+            falta = "cuando" if c.get("pendiente") else "pendiente"
+            errores.append(f"pendiente sin señal: {r} → falta `{falta}`; sin los dos campos `buscar` nunca avisa (al cumplirse, quitar ambos)")
         rel_links = WIKILINK.findall(c.get("related", ""))
         if c.get("created", "") >= hace7 and len(rel_links) > 3 and r.split("/")[0] in ("concepts", "learning", "resources", "questions"):
-            avisos.append(f"regla dispersa: {r} tiene {len(rel_links)} enlaces en related (máx. 3 en notas nuevas)")
-    privadas = [r for r in rels if campos(leer(abs_(r))).get("privado") == "true"]
+            avisos.append(f"regla dispersa: {r} tiene {len(rel_links)} enlaces en related → dejar los 3 más específicos")
+    privadas = [r for r, c in meta.items() if c.get("privado") == "true"]
+    # hot.md se lee al empezar cada sesión y viaja fuera del vault: nada privado ahí
+    if "hot" in rels:
+        hot = re.sub(CODIGO, "", leer(abs_("hot")))
+        nombres_priv = {r.rsplit("/", 1)[-1].lower(): r for r in privadas}
+        archivadas = {r.rsplit("/", 1)[-1].lower(): r for r, c in meta.items() if c.get("status") == "archived"}
+        seccion = ""
+        for linea in hot.split("\n"):
+            if linea.startswith("## "):
+                seccion = linea[3:].strip().lower()
+            for m in WIKILINK.finditer(linea):
+                base = m.group(1).strip().rsplit("/", 1)[-1].lower().removesuffix(".md")
+                if base in nombres_priv:
+                    errores.append(f"privada en hot.md: [[{m.group(1).strip()}]] → quitar el enlace y lo que resuma de ella (las notas privadas no salen del vault)")
+                if base in archivadas and "active" in seccion and "archivad" not in linea.lower():
+                    avisos.append(f"archivada como hilo activo en hot.md: [[{m.group(1).strip()}]] → moverla a la línea de «Archivados» o quitarla")
     for e in errores:
         print("ERROR", e)
     for a in avisos:
@@ -391,10 +437,87 @@ def estado(args):
 
 
 # ------------------------------------------------------------------ main
+# ------------------------------------------------------------------ publicar
+def publicar(args):
+    """Una escritura completa en un solo comando, para gastar menos solicitudes (cada llamada relee todo el contexto).
+
+    Se detiene en el primer problema:
+      1. hipocampo.py comparar   un `duplicado` (o dos notas iguales en el mismo plan) detiene todo; `pariente` solo avisa
+      2. aplicar                 todo o nada (con --dry solo simula y termina)
+      3. indice                  index.md y los _index.md
+      4. verificar               con errores no se sube nada (código 2): lo aplicado queda en el disco para corregirlo
+      5. git add -A, commit y push   salvo --sin-git; si el push falla, código 3 y aviso
+    Códigos: 0 bien, 1 detenido antes de escribir, 2 verificar con errores, 3 git o push fallaron.
+    """
+    py = sys.executable
+    env = {**os.environ, "PYTHONIOENCODING": "utf-8"}
+
+    def correr(cmd):
+        r = subprocess.run(cmd, cwd=RAIZ, capture_output=True, text=True, encoding="utf-8", errors="replace", env=env)
+        return r.returncode, ((r.stdout or "") + (r.stderr or "")).strip()
+
+    hip = os.path.join(RAIZ, ".cerebro", "hipocampo.py")
+    if os.path.exists(hip):
+        _, out = correr([py, hip, "comparar", "--plan", args.plan])
+        malos = [l for l in out.splitlines() if " duplicado" in l or "mismo plan" in l]
+        parientes = [l for l in out.splitlines() if " pariente" in l]
+        for l in parientes:
+            print("aviso pariente:", l.strip())
+        if malos and not args.forzar:
+            print("\n".join(malos))
+            print("DETENIDO: el plan duplica notas; anexar a la existente o usar --forzar si de verdad son distintas")
+            return 1
+    try:
+        aplicar(args.plan, args.dry)
+    except SystemExit as exc:
+        print(exc if isinstance(exc.code, str) else f"aplicar falló ({exc.code})")
+        return 1
+    if args.dry:
+        return 0
+    indice()
+    if verificar():
+        print("NO SE SUBIÓ: verificar dio errores; corregirlos y correr `vault.py publicar` con otro plan o `cerrar.py`")
+        return 2
+    if args.sin_git:
+        print("git: omitido (--sin-git)")
+        return 0
+    codigo, out = correr(["git", "add", "-A"])
+    if codigo:
+        print("git add falló:", out[-800:])
+        return 3
+    if correr(["git", "diff", "--cached", "--quiet"])[0] == 0:
+        print("git: nada que subir")
+        return 0
+    mensaje = args.mensaje or "vault | " + os.path.splitext(os.path.basename(args.plan))[0]
+    if args.trailer:
+        mensaje += "\n\n" + "\n".join(args.trailer)
+    with tempfile.NamedTemporaryFile("w", encoding="utf-8", newline="\n", suffix=".txt", delete=False) as f:
+        f.write(mensaje + "\n")   # UTF-8 sin BOM (Set-Content de PowerShell 5 le pone BOM)
+        ruta_msg = f.name
+    try:
+        codigo, out = correr(["git", "commit", "-q", "-F", ruta_msg])
+    finally:
+        os.remove(ruta_msg)
+    if codigo:
+        print("git commit falló:", out[-800:])
+        return 3
+    codigo, out = correr(["git", "push", "-q"])
+    _, ultimo = correr(["git", "log", "--oneline", "-1"])
+    if codigo:
+        print(f"commit {ultimo} hecho, pero el PUSH FALLÓ (el vault no está respaldado):", out[-800:])
+        return 3
+    print(f"subido: {ultimo}")
+    return 0
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = ap.add_subparsers(dest="cmd", required=True)
     a = sub.add_parser("aplicar"); a.add_argument("plan"); a.add_argument("--dry", action="store_true")
+    pu = sub.add_parser("publicar"); pu.add_argument("plan"); pu.add_argument("-m", "--mensaje")
+    pu.add_argument("--trailer", action="append", default=[], help="línea al final del commit (se puede repetir)")
+    pu.add_argument("--dry", action="store_true"); pu.add_argument("--sin-git", action="store_true")
+    pu.add_argument("--forzar", action="store_true", help="aplicar aunque comparar vea un duplicado")
     sub.add_parser("indice")
     sub.add_parser("verificar")
     d = sub.add_parser("descripciones"); d.add_argument("carpeta", nargs="?")
@@ -403,6 +526,8 @@ def main():
     args = ap.parse_args()
     if args.cmd == "aplicar":
         aplicar(args.plan, args.dry)
+    elif args.cmd == "publicar":
+        sys.exit(publicar(args))
     elif args.cmd == "indice":
         indice()
     elif args.cmd == "verificar":

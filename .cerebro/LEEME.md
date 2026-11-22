@@ -11,7 +11,8 @@ Scripts de Python para que Claude mantenga el vault gastando pocos tokens. Casi 
 | Buscar una nota | `python .cerebro/hipocampo.py buscar <palabras>` |
 | Decir que una nota sirvió (y enseñar esas palabras) | `python .cerebro/hipocampo.py usar "Nota" --consulta "<palabras>"` |
 | Contexto alrededor de una nota | `python .cerebro/ruta.py "Nota"` · entre dos: `ruta.py "A" "B"` · puntos de entrada: `ruta.py --hubs` |
-| Escribir varias notas a la vez | `python .cerebro/vault.py aplicar plan.json` (`--dry` para simular) |
+| Escribir y respaldar en un comando | `python .cerebro/vault.py publicar plan.json -m "<operación>"` (compara, aplica, índice, verifica, commit y push; `--dry` simula, `--sin-git` no sube) |
+| Escribir varias notas a la vez, sin subir | `python .cerebro/vault.py aplicar plan.json` (`--dry` para simular) |
 | Revisar duplicados antes de escribir | `python .cerebro/hipocampo.py comparar --plan plan.json` |
 | Mantenimiento | `python .cerebro/hipocampo.py pendientes` |
 | Marcar una lección de Claude | `python .cerebro/lecciones.py marcar E01 +` (o `-`) · `listar --alertas` |
@@ -21,7 +22,7 @@ Scripts de Python para que Claude mantenga el vault gastando pocos tokens. Casi 
 
 ## Los scripts
 
-- **`vault.py`**: escribe con planes JSON (todo o nada; operaciones `nueva`, `anexar`, `insertar_tras`, `reemplazar`, `meta`, `log`), regenera `index.md` y los `_index.md`, verifica enlaces y acentos, y guarda el registro de actualizaciones (`estado`).
+- **`vault.py`**: escribe con planes JSON (todo o nada; operaciones `nueva`, `anexar`, `insertar_tras`, `reemplazar`, `meta`, `log`), regenera `index.md` y los `_index.md`, verifica (acentos, enlaces, frontmatter, notas privadas enlazadas desde `hot.md`, pendientes sin señal, `status` y `type` fuera de la lista; cada error dice cómo arreglarlo), `publicar` hace todo eso más commit y push en un comando, y guarda el registro de actualizaciones (`estado`).
 - **`hipocampo.py`**: el índice. Una entrada por nota con id estable, `description`, alias, etiquetas y una huella del cuerpo hongo (FlyHash). Se verifica contra los archivos en cada consulta, así que nunca devuelve una ruta que no existe. Modos de búsqueda: léxico (con el vocabulario aprendido de `usar`), hongo (parecido sin palabras exactas) y mixto; `evaluar` decide cuál usar por omisión con tus preguntas. También avisa los **pendientes con señal** (`pendiente` + `cuando` en el frontmatter) con ⏰.
 - **`conectoma.py`**: analiza el vault como red (hubs, puentes, regiones, mundo pequeño) y escribe `wiki/meta/Mapa del cerebro.md`.
 - **`physarum.py`**: simula el moho *Physarum polycephalum* sobre los enlaces (Tero et al., 2010). Las búsquedas reales de `uso.jsonl` lo alimentan: los caminos usados engordan. No cambia enlaces; escribe un informe.
